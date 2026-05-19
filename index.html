@@ -438,7 +438,7 @@
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-avatar">MA</div>
+  <img src="profile.jpeg" alt="Mujeeb Ahmed" style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid var(--accent);display:block;margin:0 auto 16px;"/>
   <div class="sidebar-name">Mujeeb Ahmed</div>
   <div class="sidebar-role">Educator &amp; Developer</div>
   <div class="sidebar-tags">
@@ -482,7 +482,7 @@
   <section id="home" class="active">
     <div class="home-grid">
       <div class="home-img-wrap">
-        <div class="home-avatar">MA</div>
+        <img src="profile.jpeg" alt="Mujeeb Ahmed" style="width:100%;max-width:320px;border-radius:24px;object-fit:cover;border:2px solid var(--border);display:block;"/>
         <div class="home-badge">Available for work ✓</div>
       </div>
       <div>
@@ -639,49 +639,28 @@
       <h2 class="sec-title">Contact Me</h2>
       <div class="sec-line"></div>
     </div>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <div class="contact-item">
-          <div class="contact-icon">📧</div>
-          <div>
-            <div class="contact-label">Email</div>
-            <div class="contact-value">youremail@gmail.com</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">🐙</div>
-          <div>
-            <div class="contact-label">GitHub</div>
-            <div class="contact-value">github.com/yourusername</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">🔗</div>
-          <div>
-            <div class="contact-label">LinkedIn</div>
-            <div class="contact-value">linkedin.com/in/yourprofile</div>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div>
-            <div class="contact-label">Location</div>
-            <div class="contact-value">Sukkur, Sindh, Pakistan</div>
-          </div>
-        </div>
-      </div>
-      <form class="contact-form" action="https://formsubmit.co/youremail@gmail.com" method="POST">
+    <div style="max-width:600px;margin:0 auto;">
+      <p style="color:var(--muted);font-size:15px;line-height:1.8;margin-bottom:32px;text-align:center;">
+        Have a question or want to work together? Send me a message and I'll get back to you as soon as possible.
+      </p>
+      <form class="contact-form" action="https://formsubmit.co/ahmedalixy149@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false"/>
+        <input type="hidden" name="_subject" value="New message from Portfolio!"/>
         <div class="form-group">
           <label>Your Name</label>
-          <input type="text" name="name" placeholder="Mujeeb Ahmed" required/>
+          <input type="text" name="name" placeholder="Your full name" required/>
         </div>
         <div class="form-group">
           <label>Your Email</label>
-          <input type="email" name="email" placeholder="you@example.com" required/>
+          <input type="email" name="email" placeholder="your@email.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" name="subject" placeholder="What is this about?" required/>
         </div>
         <div class="form-group">
           <label>Message</label>
-          <textarea name="message" placeholder="Write your message here..."></textarea>
+          <textarea name="message" placeholder="Write your message here..." style="min-height:150px;"></textarea>
         </div>
         <button type="submit" class="send-btn">Send Message →</button>
       </form>

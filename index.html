@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mujeeb Ahmed — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #020c1b;
+    --sidebar-bg: #07192f;
+    --card-bg: #071e38;
+    --accent: #29b6f6;
+    --accent2: #0288d1;
+    --text: #e8edf3;
+    --muted: #8ba3bc;
+    --border: rgba(41,182,246,0.15);
+    --sidebar-w: 270px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    min-height: 100vh;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 24px 32px;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+  .sidebar-avatar {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 32px; font-weight: 800;
+    color: #020c1b;
+    margin: 0 auto 16px;
+    border: 3px solid var(--accent);
+  }
+  .sidebar-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .sidebar-role {
+    font-size: 12px;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 32px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .sidebar-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: center;
+    margin-bottom: 36px;
+  }
+  .sidebar-tags span {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: rgba(41,182,246,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+  }
+  nav { flex: 1; }
+  nav ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  nav ul li a {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 16px;
+    border-radius: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  nav ul li a:hover,
+  nav ul li a.active {
+    background: rgba(41,182,246,0.12);
+    color: var(--accent);
+  }
+  nav ul li a .nav-icon { font-size: 18px; width: 20px; text-align: center; }
+  .sidebar-footer {
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* ── HAMBURGER (mobile) ── */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 42px; height: 42px;
+    align-items: center; justify-content: center;
+    cursor: pointer; flex-direction: column; gap: 5px;
+  }
+  .hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--accent); border-radius: 2px;
+    transition: 0.3s;
+  }
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 90;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 60px 56px;
+    min-height: 100vh;
+  }
+
+  /* ── SECTIONS ── */
+  section { display: none; animation: fadeIn 0.4s ease; }
+  section.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── HOME ── */
+  .home-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 56px;
+    align-items: center;
+    min-height: 80vh;
+  }
+  .home-img-wrap {
+    position: relative;
+  }
+  .home-avatar {
+    width: 100%; aspect-ratio: 1;
+    max-width: 320px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #071e38 0%, #0d3460 100%);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 80px; font-weight: 800;
+    color: var(--accent);
+  }
+  .home-badge {
+    position: absolute; bottom: -12px; right: -12px;
+    background: var(--accent);
+    color: #020c1b;
+    font-size: 12px; font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .greeting {
+    font-size: 16px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .home-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+  .home-title span { color: var(--accent); }
+  .home-desc {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 36px;
+    max-width: 480px;
+  }
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 28px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-primary { background: var(--accent); color: #020c1b; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+  .btn-ghost:hover { background: rgba(41,182,246,0.1); }
+
+  /* ── SECTION HEADER ── */
+  .sec-header { margin-bottom: 48px; }
+  .sec-label {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .sec-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 800;
+    color: var(--text);
+  }
+  .sec-line {
+    width: 50px; height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-top: 14px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  .card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 19px; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .check-list { list-style: none; }
+  .check-list li {
+    padding: 6px 0;
+    font-size: 15px;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .check-list li::before {
+    content: '✦';
+    color: var(--accent);
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ── ABOUT GRID ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* ── SKILLS ── */
+  .skill-block { margin-bottom: 20px; }
+  .skill-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .skill-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .skill-pct { font-size: 13px; color: var(--accent); }
+  .bar-bg { height: 6px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; }
+  .bar-fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    width: 0;
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 24px; }
+  .proj-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .proj-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .proj-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(41,182,246,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .proj-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .proj-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proj-tags span {
+    font-size: 11px; padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(41,182,246,0.1);
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 10px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 36px;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -28px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .tl-period {
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .tl-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tl-place { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+  .tl-body { font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .contact-info { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 22px;
+  }
+  .contact-icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    background: rgba(41,182,246,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .contact-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .contact-value { font-size: 14px; font-weight: 500; color: var(--text); }
+  .contact-form { display: flex; flex-direction: column; gap: 14px; }
+  .form-group label {
+    display: block;
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .send-btn {
+    padding: 14px;
+    background: var(--accent);
+    color: #020c1b;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    border: none; border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .send-btn:hover { background: var(--accent2); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar { transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .overlay.open { display: block; }
+    .hamburger { display: flex; }
+    .main { margin-left: 0; padding: 70px 24px 40px; }
+    .home-grid { grid-template-columns: 1fr; }
+    .home-avatar { max-width: 200px; font-size: 60px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hamburger -->
+<button class="hamburger" id="hamburger" aria-label="Open menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-avatar">MA</div>
+  <div class="sidebar-name">Mujeeb Ahmed</div>
+  <div class="sidebar-role">Educator &amp; Developer</div>
+  <div class="sidebar-tags">
+    <span>Python</span>
+    <span>Data Science</span>
+    <span>Web Dev</span>
+    <span>AI</span>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#" class="nav-link active" data-target="home">
+        <span class="nav-icon">🏠</span> Home
+      </a></li>
+      <li><a href="#" class="nav-link" data-target="about">
+        <span class="nav-icon">👤</span> About
+      </a></li>
+      <li><a href="#" class="nav-link" data-target="skills">
+        <span class="nav-icon">⚡</span> Skills
+      </a></li>
+      <li><a href="#" class="nav-link" data-target="projects">
+        <span class="nav-icon">🗂️</span> Projects
+      </a></li>
+      <li><a href="#" class="nav-link" data-target="experience">
+        <span class="nav-icon">📋</span> Experience
+      </a></li>
+      <li><a href="#" class="nav-link" data-target="contact">
+        <span class="nav-icon">✉️</span> Contact
+      </a></li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    📍 Sukkur, Sindh, Pakistan<br>
+    &copy; 2025 Mujeeb Ahmed
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- HOME -->
+  <section id="home" class="active">
+    <div class="home-grid">
+      <div class="home-img-wrap">
+        <div class="home-avatar">MA</div>
+        <div class="home-badge">Available for work ✓</div>
+      </div>
+      <div>
+        <div class="greeting">Hello, World!</div>
+        <h1 class="home-title">
+          I'm <span>Mujeeb</span><br>Ahmed
+        </h1>
+        <p class="home-desc">
+          Educator, Python Developer, Data Science Instructor, and Web Application Developer. I build modern applications using Python, Flask, Streamlit, and AI tools — passionate about teaching technology and creating real-world software solutions.
+        </p>
+        <div class="btn-row">
+          <a href="#" class="btn btn-primary nav-link" data-target="projects">View Projects</a>
+          <a href="#" class="btn btn-ghost nav-link" data-target="contact">Contact Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-header">
+      <div class="sec-label">Get to know me</div>
+      <h2 class="sec-title">About Me</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="card" style="margin-bottom:32px">
+      <h3>Who Am I?</h3>
+      <p style="color:var(--muted);font-size:15px;line-height:1.9;">
+        I am Mujeeb Ahmed from Sukkur, Sindh, Pakistan — an Educator, Python Developer, Data Science Instructor, and technology enthusiast. I am passionate about helping students learn modern technologies through practical and project-based learning.
+      </p>
+    </div>
+    <div class="about-grid">
+      <div class="card">
+        <h3>I Teach</h3>
+        <ul class="check-list">
+          <li>Data Science</li>
+          <li>Data Analysis</li>
+          <li>Python Programming</li>
+          <li>C++ Programming</li>
+          <li>JavaScript</li>
+          <li>HTML / CSS</li>
+          <li>Basic to Advanced Concepts</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>I Build</h3>
+        <ul class="check-list">
+          <li>Flask Web Applications</li>
+          <li>Streamlit Applications</li>
+          <li>AI-Based Projects</li>
+          <li>Quiz Systems</li>
+          <li>Data Dashboards</li>
+          <li>Chatbot Interfaces</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-header">
+      <div class="sec-label">What I know</div>
+      <h2 class="sec-title">My Skills</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="about-grid">
+      <div>
+        <div class="card">
+          <h3>Programming Languages</h3>
+          <div id="skills-lang"></div>
+        </div>
+        <div class="card">
+          <h3>Data Science</h3>
+          <div id="skills-ds"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Development Skills</h3>
+          <div id="skills-dev"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-header">
+      <div class="sec-label">What I've built</div>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-icon">🧩</div>
+        <div class="proj-title">Online Quiz System</div>
+        <p class="proj-desc">A complete quiz system with admin panel, student interface, and database connectivity using Flask and SQLite.</p>
+        <div class="proj-tags">
+          <span>Flask</span><span>SQLite</span><span>Python</span><span>HTML/CSS</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon">🤖</div>
+        <div class="proj-title">AI Chatbot</div>
+        <p class="proj-desc">An AI-powered chatbot using Python and OpenRouter API with voice input support and full chat history.</p>
+        <div class="proj-tags">
+          <span>Python</span><span>OpenRouter API</span><span>AI</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon">💼</div>
+        <div class="proj-title">Portfolio Website</div>
+        <p class="proj-desc">A professional Streamlit portfolio with sidebar navigation, responsive layout, and a fully integrated contact form.</p>
+        <div class="proj-tags">
+          <span>Streamlit</span><span>Python</span><span>UI Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-header">
+      <div class="sec-label">My journey</div>
+      <h2 class="sec-title">Experience</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Current Position</div>
+        <div class="tl-title">Data Science & Python Instructor</div>
+        <div class="tl-place">📍 Sukkur, Sindh, Pakistan</div>
+        <div class="tl-body">
+          Teaching Data Science, Data Analysis, Python, C++, JavaScript, and HTML/CSS. Conducting practical and project-based learning sessions to help students understand modern technologies effectively.
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Development</div>
+        <div class="tl-title">Web & AI Application Developer</div>
+        <div class="tl-place">🌐 Freelance / Personal Projects</div>
+        <div class="tl-body">
+          Building Flask and Streamlit web applications, AI-powered chatbots, and interactive quiz systems. Integrating APIs and databases for real-world software solutions.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="sec-header">
+      <div class="sec-label">Get in touch</div>
+      <h2 class="sec-title">Contact Me</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">youremail@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🐙</div>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">github.com/yourusername</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🔗</div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">linkedin.com/in/yourprofile</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Location</div>
+            <div class="contact-value">Sukkur, Sindh, Pakistan</div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" action="https://formsubmit.co/youremail@gmail.com" method="POST">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" name="name" placeholder="Mujeeb Ahmed" required/>
+        </div>
+        <div class="form-group">
+          <label>Your Email</label>
+          <input type="email" name="email" placeholder="you@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="message" placeholder="Write your message here..."></textarea>
+        </div>
+        <button type="submit" class="send-btn">Send Message →</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const skillsData = {
+    lang: [
+      { name:'Python', pct:95 },
+      { name:'HTML / CSS', pct:90 },
+      { name:'JavaScript', pct:80 },
+      { name:'C++', pct:85 },
+    ],
+    dev: [
+      { name:'Streamlit', pct:92 },
+      { name:'Web Development', pct:90 },
+      { name:'SQLite', pct:90 },
+      { name:'Flask', pct:85 },
+      { name:'Application Development', pct:88 },
+    ],
+    ds: [
+      { name:'Data Science', pct:90 },
+      { name:'Data Analysis', pct:85 },
+      { name:'Pandas', pct:80 },
+      { name:'NumPy', pct:78 },
+    ]
+  };
+
+  function renderSkills(containerId, items) {
+    const el = document.getElementById(containerId);
+    el.innerHTML = items.map(s => `
+      <div class="skill-block">
+        <div class="skill-top">
+          <span class="skill-name">${s.name}</span>
+          <span class="skill-pct">${s.pct}%</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill" data-pct="${s.pct}"></div></div>
+      </div>
+    `).join('');
+  }
+
+  renderSkills('skills-lang', skillsData.lang);
+  renderSkills('skills-dev', skillsData.dev);
+  renderSkills('skills-ds', skillsData.ds);
+
+  function animateBars() {
+    document.querySelectorAll('#skills .bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.pct + '%';
+    });
+  }
+
+  // Navigation
+  function navigate(target) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+    document.querySelectorAll(`.nav-link[data-target="${target}"]`).forEach(a => a.classList.add('active'));
+    if (target === 'skills') setTimeout(animateBars, 100);
+    // Close sidebar on mobile
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      navigate(link.dataset.target);
+    });
+  });
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+</script>
+</body>
+</html>
